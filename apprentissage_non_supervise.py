@@ -19,87 +19,86 @@
 #-----------------------------------------------------------------------------------------
 
 
-
-import pandas as pnd
+from pandas import pandas as pnd
 import matplotlib.pyplot as plt
 
 
-#Chargement des données
-fruits = pnd.read_csv("datas/fruits.csv", names=['DIAMETRE','POIDS'], header=None)
+# Chargement des données
+fruits = pnd.read_csv("datas/fruits.csv", names=['DIAMETRE', 'POIDS'], header=None)
 
-#Visualisation graphique des données
-fruits.plot.scatter(x="DIAMETRE",y="POIDS")
+# Visualisation graphique des données
+fruits.plot.scatter(x="DIAMETRE", y="POIDS")
 plt.show()
 
 
-#Apprentissage avec l'algorithme K-Mean
+# pprentissage avec l'algorithme K-Mean
 from sklearn.cluster import KMeans
-modele=KMeans(n_clusters=2)
+modele = KMeans(n_clusters=2)
 modele.fit(fruits)
 
-#Predictions
+# Predictions
 predictions_kmeans = modele.predict(fruits)
 
-#Affichage de la clusterisation
+# Affichage de la clusterisation
 plt.scatter(fruits.DIAMETRE, fruits.POIDS, c=predictions_kmeans, s=50, cmap='viridis')
 plt.xlabel("DIAMETRE")
 plt.ylabel("POIDS")
 
-#Affichage des centroïdes
+# Affichage des centroïdes
 centers = modele.cluster_centers_
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
 
-#Sauvegarde du modèle ( A décommenter si besoin)
-#from joblib import dump
-#dump(modele,'modeles/kmean.joblib')
+# Sauvegarde du modèle ( A décommenter si besoin)
+# from joblib import dump
+# dump(modele,'modeles/kmean.joblib')
 
-#--- Realisation de classifications --
-#CERISE: 26.98 mm de diametre ,8.75 grammes
-#ABRICOT: 55.7  mm de diametre , 102.16 grammes
+# --- Realisation de classifications --
+# CERISE: 26.98 mm de diametre ,8.75 grammes
+# ABRICOT: 55.7  mm de diametre , 102.16 grammes
 
 
-cerise = [[26.98,8.75]]
+cerise = [[26.98, 8.75]]
 numCluster = modele.predict(cerise)
-print("Numero de cluster des cerises: "+ str(numCluster))
+print("Numéro de cluster des cerises: " + str(numCluster))
 
 
-abricot = [[55.7,102.16]]
+abricot = [[55.7, 102.16]]
 numCluster = modele.predict(abricot)
-print("Numero de cluster des abricots: " + str(numCluster))
+print("Numéro de cluster des abricots: " + str(numCluster))
 
-#Code à adapter en fonction des numéros de clusters
-#déterminés précédemment :
+# Code à adapter en fonction des numéros de clusters
+# déterminés précédemment :
 
-cerise = [[26.98,8.75]]
+cerise = [[26.98, 8.75]]
 numCluster = modele.predict(cerise)
-if int(numCluster)==0:
+if int(numCluster) == 0:
     print("C'est un abricot !")
 else:
     print("C'est une cerise ! ")
 
 
-abricot = [[55.7,102.16]]
+abricot = [[55.7, 102.16]]
 numCluster = modele.predict(abricot)
-if int(numCluster)==0:
+if int(numCluster) == 0:
     print("C'est un abricot !")
 else:
     print("C'est une cerise ! ")
 
 
-#---- Modele de mélanges Gaussiens (GMM) -----------
+# ---- Modele de mélanges Gaussiens (GMM) -----------
 from sklearn import mixture
 
-#Détermination des clusters (2 à trouver)
+# Détermination des clusters (2 à trouver)
 gmm = mixture.GaussianMixture(n_components=2)
 
-#Apprentissage
+# Apprentissage
 gmm.fit(fruits)
 
-#Classification
+# Classification
 clusters = gmm.predict(fruits)
 
-#Affichage des clusters
+# Affichage des clusters
 plt.scatter(fruits.DIAMETRE, fruits.POIDS, c=clusters, s=40, cmap='viridis');
 plt.xlabel("DIAMETRE")
 plt.ylabel("POIDS")

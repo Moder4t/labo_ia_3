@@ -31,10 +31,10 @@ caracteristiquesCerises = [[17, 19, 1, 5], [20, 21, 5, 6], [22, 23, 6, 7],
 # ABRICOTS : ATTENTION DEUX CAS DE TESTS EN FONCTION DE L'AVANCEE DE VOTRE LECTURE
 
 # Cas 1 :
-caracteristiquesAbricots = [[40, 44, 41], [45, 49, 54], [50, 54, 74], [55, 59, 100]]
+caracteristiquesAbricots = [[40, 44, 41], [40, 44, 41], [45, 49, 54], [50, 54, 74], [55, 59, 100]]
 
 # Cas 2 :
-# caracteristiquesAbricots = [[35,39,27],[40,44,41],[45,49,54],[50,54,74],[55,59,100]]
+# caracteristiquesAbricots = [[35, 39, 27], [40, 44, 41], [45, 49, 54], [50, 54, 74], [55, 59, 100]]
 
 
 # GENERATION DES DONNEES
@@ -80,4 +80,4 @@ random.shuffle(fruits)
 
 # Sauvegarde des observations dans un fichier
 dataFrame = pnd.DataFrame(fruits)
-dataFrame.to_csv("datas/fruitsJuly.csv", index=False, header=False)
+dataFrame.to_csv("datas/fruits.csv", index=False, header=False)
